@@ -1,6 +1,6 @@
 import type { Person, PersonReportData, PersonSearchQuery, PersonStats } from "@/types/person";
 import { MOCK_PERSONS } from "./mock-data";
-import { geocodeLocation } from "./geocode";
+import { geocodeFromText } from "./geocode";
 import { isSupabaseConfigured } from "./supabase/server";
 import { createClient } from "./supabase/server";
 
@@ -94,7 +94,7 @@ function filterMockPersons(query: PersonSearchQuery): Person[] {
 }
 
 export async function createPerson(data: PersonReportData): Promise<Person> {
-  const coords = await geocodeLocation(data.last_location);
+  const coords = geocodeFromText(data.last_location);
 
   if (!isSupabaseConfigured()) {
     const newPerson: Person = {
@@ -103,8 +103,8 @@ export async function createPerson(data: PersonReportData): Promise<Person> {
       age: data.age ?? null,
       gender: data.gender ?? null,
       last_location: data.last_location,
-      latitude: coords?.latitude ?? null,
-      longitude: coords?.longitude ?? null,
+      latitude: coords.lat,
+      longitude: coords.lng,
       description: data.description ?? null,
       cedula: data.cedula ?? null,
       photo_url: data.photo_url ?? null,
@@ -128,8 +128,8 @@ export async function createPerson(data: PersonReportData): Promise<Person> {
       age: data.age ?? null,
       gender: data.gender ?? null,
       last_location: data.last_location,
-      latitude: coords?.latitude ?? null,
-      longitude: coords?.longitude ?? null,
+      latitude: coords.lat,
+      longitude: coords.lng,
       description: data.description ?? null,
       cedula: data.cedula ?? null,
       photo_url: data.photo_url ?? null,
