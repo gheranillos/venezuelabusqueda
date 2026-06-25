@@ -68,6 +68,18 @@ export function HomePage({ initialPersons, initialStats }: HomePageProps) {
         <p className="font-semibold text-[#1E3A5F] mb-1">🇻🇪 Desaparecidos Terremoto Venezuela</p>
         <p>Herramienta ciudadana de emergencia · Sismo del 24 de junio de 2025</p>
         <p className="mt-2">Gratuito · Sin registro · Hecho por y para venezolanos</p>
+        <p className="mt-4 text-xs text-gray-400">
+          Powered by{" "}
+          <a
+            href="https://instagram.com/gheranillos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#1E3A5F] hover:text-[#DC2626] font-medium transition-colors"
+          >
+            @gheranillos
+          </a>
+          {" · "}Labor humanitaria voluntaria
+        </p>
       </footer>
 
       <EmergencyBar
