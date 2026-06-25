@@ -2,6 +2,7 @@
 
 import type { Person } from "@/types/person";
 import { formatDate } from "@/lib/format";
+import { PersonContactSection } from "./PersonContactSection";
 import { toast } from "sonner";
 
 interface PersonCardProps {
@@ -66,12 +67,9 @@ export function PersonCard({ person, onViewDetails }: PersonCardProps) {
         {person.age && <p className="text-sm text-gray-500">👤 {person.age} años</p>}
         <p className="text-xs text-gray-400 mt-2">Reportado: {formatDate(person.created_at)}</p>
 
-        {person.status === "found" && person.contact_info && (
-          <div className="mt-3 bg-green-50 rounded-xl p-3">
-            <p className="text-xs font-bold text-green-700 mb-1">✓ INFORMACIÓN DE CONTACTO</p>
-            <p className="text-sm text-green-800">{person.contact_info}</p>
-          </div>
-        )}
+        <div className="mt-3">
+          <PersonContactSection person={person} variant="card" />
+        </div>
 
         <div className="flex gap-2 mt-3">
           <button

@@ -2,6 +2,7 @@
 
 import type { Person } from "@/types/person";
 import { formatDate } from "@/lib/format";
+import { PersonContactSection } from "./PersonContactSection";
 import {
   Dialog,
   DialogContent,
@@ -83,12 +84,7 @@ export function PersonDetailModal({ person, open, onClose }: PersonDetailModalPr
             </div>
           )}
 
-          {person.status === "found" && person.contact_info && (
-            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-              <p className="text-xs font-bold text-green-700 mb-1">✓ INFORMACIÓN DE CONTACTO</p>
-              <p className="text-sm text-green-800">{person.contact_info}</p>
-            </div>
-          )}
+          <PersonContactSection person={person} variant="modal" />
 
           <p className="text-xs text-gray-400">Reportado: {formatDate(person.created_at)}</p>
         </div>
