@@ -10,6 +10,13 @@ import {
 } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+function mapSupabaseError(message: string): string {
+  if (message.toLowerCase().includes("invalid api key")) {
+    return "Clave de Supabase inválida. En Vercel agrega SUPABASE_SERVICE_ROLE_KEY (service_role, NO la anon) y haz redeploy.";
+  }
+  return message;
+}
+
 export async function loginAdminAction(password: string): Promise<{ ok: boolean; error?: string }> {
   if (!verifyAdminPassword(password)) {
     return { ok: false, error: "Contraseña incorrecta" };
@@ -50,7 +57,7 @@ export async function updatePersonStatusAction(
       .eq("id", personId);
 
     if (error) {
-      return { ok: false, error: error.message };
+      return { ok: false, error: mapSupabaseError(error.message) };
     }
 
     revalidatePath("/admin");
@@ -59,7 +66,7 @@ export async function updatePersonStatusAction(
   } catch (err) {
     return {
       ok: false,
-      error: err instanceof Error ? err.message : "Error al actualizar",
+      error: mapSupabaseError(err instanceof Error ? err.message : "Error al actualizar"),
     };
   }
 }
@@ -76,7 +83,7 @@ export async function deletePersonAction(
     const { error } = await supabase.from("persons").delete().eq("id", personId);
 
     if (error) {
-      return { ok: false, error: error.message };
+      return { ok: false, error: mapSupabaseError(error.message) };
     }
 
     revalidatePath("/admin");
@@ -85,7 +92,7 @@ export async function deletePersonAction(
   } catch (err) {
     return {
       ok: false,
-      error: err instanceof Error ? err.message : "Error al eliminar",
+      error: mapSupabaseError(err instanceof Error ? err.message : "Error al eliminar"),
     };
   }
 }

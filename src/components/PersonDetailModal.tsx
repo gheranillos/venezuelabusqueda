@@ -2,6 +2,7 @@
 
 import type { Person } from "@/types/person";
 import { formatDate } from "@/lib/format";
+import { personStatusBadge } from "@/lib/person-status";
 import { PersonContactSection } from "./PersonContactSection";
 import {
   Dialog,
@@ -46,7 +47,7 @@ export function PersonDetailModal({ person, open, onClose }: PersonDetailModalPr
                 person.status === "found" ? "bg-green-500" : "bg-red-500"
               }`}
             >
-              {person.status === "found" ? "✓ Localizado" : "⚠ Sin contacto"}
+              {personStatusBadge(person.status)}
             </span>
           </div>
 

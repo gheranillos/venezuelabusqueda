@@ -2,15 +2,16 @@
 
 import { useMemo, useState } from "react";
 import type { Person, PersonStatus } from "@/types/person";
+import { FILTER_TAB_MISSING } from "@/lib/person-status";
 import { PersonCard } from "./PersonCard";
 import { PersonCardSkeleton } from "./PersonCardSkeleton";
 import { PersonDetailModal } from "./PersonDetailModal";
 
-type FilterTab = "Todos" | "Sin contacto" | "Localizados";
+type FilterTab = "Todos" | typeof FILTER_TAB_MISSING | "Localizados";
 
 const tabToStatus: Record<FilterTab, PersonStatus | "all"> = {
   Todos: "all",
-  "Sin contacto": "missing",
+  [FILTER_TAB_MISSING]: "missing",
   Localizados: "found",
 };
 
@@ -33,7 +34,7 @@ export function PersonGrid({ persons, isLoading }: PersonGridProps) {
     <section id="resultados" className="max-w-7xl mx-auto px-4 py-12 pb-24 md:pb-12">
       <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
         <div className="flex gap-2 flex-wrap">
-          {(["Todos", "Sin contacto", "Localizados"] as FilterTab[]).map((tab) => (
+          {(["Todos", FILTER_TAB_MISSING, "Localizados"] as FilterTab[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import type { Person } from "@/types/person";
 import { VENEZUELA_MAP_CENTER, VENEZUELA_MAP_ZOOM } from "@/lib/constants";
+import { personStatusBadge } from "@/lib/person-status";
 import { geocodeLocation, resolveCoordinates } from "@/lib/geocode";
 import "leaflet/dist/leaflet.css";
 
@@ -93,7 +94,7 @@ export function ReportsMap({ persons }: ReportsMapProps) {
         <div className="p-5 border-b border-gray-100">
           <h3 className="font-bold text-[#1E3A5F] text-lg mb-1">🗺️ Mapa de reportes</h3>
           <p className="text-sm text-gray-500">
-            Puntos rojos: sin contacto · Puntos verdes: localizados
+            Puntos rojos: en búsqueda · Puntos verdes: localizados
           </p>
           <div className="flex gap-4 mt-3 text-xs font-semibold">
             <span className="flex items-center gap-1.5">
@@ -146,7 +147,7 @@ export function ReportsMap({ persons }: ReportsMapProps) {
                         person.status === "found" ? "text-green-600" : "text-red-600"
                       }`}
                     >
-                      {person.status === "found" ? "✓ Localizado" : "⚠ Sin contacto"}
+                      {personStatusBadge(person.status)}
                     </p>
                   </div>
                 </Popup>

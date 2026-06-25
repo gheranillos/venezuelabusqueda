@@ -2,6 +2,7 @@
 
 import type { Person } from "@/types/person";
 import { formatDate } from "@/lib/format";
+import { personStatusBadge, personStatusLabel } from "@/lib/person-status";
 import { PersonContactSection } from "./PersonContactSection";
 import { toast } from "sonner";
 
@@ -15,7 +16,7 @@ export function PersonCard({ person, onViewDetails }: PersonCardProps) {
     const shareData = {
       title: `Busco a ${person.name}`,
       text: `${person.name} — Última ubicación: ${person.last_location}. Estado: ${
-        person.status === "found" ? "Localizado ✓" : "Sin contacto"
+        person.status === "found" ? personStatusLabel("found") : personStatusLabel("missing")
       }`,
       url: typeof window !== "undefined" ? window.location.href : "",
     };
@@ -54,10 +55,10 @@ export function PersonCard({ person, onViewDetails }: PersonCardProps) {
         )}
         <span
           className={`absolute top-2 right-2 text-xs font-bold px-2 py-1 rounded-full text-white ${
-            person.status === "found" ? "bg-green-500" : "bg-red-500 animate-pulse"
+            person.status === "found" ? "bg-green-500" : "bg-amber-500"
           }`}
         >
-          {person.status === "found" ? "✓ Localizado" : "⚠ Sin contacto"}
+          {personStatusBadge(person.status)}
         </span>
       </div>
 

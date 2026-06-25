@@ -27,7 +27,7 @@ export default async function Page() {
               </div>
               <div>
                 <p className="text-2xl font-black text-red-400">{stats.sinContacto}</p>
-                <p className="text-xs text-slate-400">Sin contacto</p>
+                <p className="text-xs text-slate-400">En búsqueda</p>
               </div>
               <div>
                 <p className="text-2xl font-black text-green-400">{stats.localizados}</p>
@@ -49,7 +49,7 @@ export default async function Page() {
                   <p className="text-sm text-gray-500">📍 {person.last_location}</p>
                   {person.age && <p className="text-sm text-gray-500">👤 {person.age} años</p>}
                   <p className="text-xs mt-2 font-semibold">
-                    {person.status === "found" ? "✓ Localizado" : "⚠ Sin contacto"}
+                    {person.status === "found" ? "✓ Localizado" : "En búsqueda"}
                   </p>
                 </article>
               ))}

@@ -3,6 +3,7 @@ import { AdminLogin } from "@/components/admin/AdminLogin";
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { isAdminAuthenticated, isAdminPasswordConfigured } from "@/lib/admin-auth";
 import { getPersons } from "@/lib/persons";
+import { getServiceRoleKeyIssue } from "@/lib/supabase/admin";
 
 export const metadata: Metadata = {
   title: "Admin — Desaparecidos Venezuela",
@@ -33,5 +34,6 @@ export default async function AdminPage() {
   }
 
   const persons = await getPersons();
-  return <AdminPanel persons={persons} />;
+  const supabaseIssue = getServiceRoleKeyIssue();
+  return <AdminPanel persons={persons} supabaseIssue={supabaseIssue} />;
 }

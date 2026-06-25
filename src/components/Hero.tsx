@@ -41,7 +41,7 @@ export function Hero({ stats, onSearch, isSearching }: HeroProps) {
           </div>
           <div className="text-center">
             <p className="text-3xl font-black text-red-400">{stats.sinContacto}</p>
-            <p className="text-xs text-slate-400 uppercase tracking-wide">Sin contacto</p>
+            <p className="text-xs text-slate-400 uppercase tracking-wide">En búsqueda</p>
           </div>
           <div className="text-center">
             <p className="text-3xl font-black text-green-400">{stats.localizados}</p>

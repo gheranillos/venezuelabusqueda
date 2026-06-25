@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Person } from "@/types/person";
 import { formatDate } from "@/lib/format";
+import { personStatusBadge } from "@/lib/person-status";
 import {
   deletePersonAction,
   logoutAdminAction,
@@ -13,9 +14,10 @@ import Link from "next/link";
 
 interface AdminPanelProps {
   persons: Person[];
+  supabaseIssue?: string | null;
 }
 
-export function AdminPanel({ persons }: AdminPanelProps) {
+export function AdminPanel({ persons, supabaseIssue }: AdminPanelProps) {
   const [filter, setFilter] = useState<"all" | "missing" | "found">("all");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [contactInfo, setContactInfo] = useState("");
@@ -44,14 +46,14 @@ export function AdminPanel({ persons }: AdminPanelProps) {
   };
 
   const handleMarkMissing = async (personId: string) => {
-    if (!confirm("¿Volver a marcar como sin contacto?")) return;
+    if (!confirm("¿Volver a marcar como en búsqueda?")) return;
 
     setLoadingId(personId);
     const result = await updatePersonStatusAction(personId, "missing");
     setLoadingId(null);
 
     if (result.ok) {
-      toast.success("Actualizado a sin contacto");
+      toast.success("Actualizado a en búsqueda");
       window.location.reload();
     } else {
       toast.error(result.error ?? "Error al actualizar");
@@ -99,6 +101,16 @@ export function AdminPanel({ persons }: AdminPanelProps) {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-6">
+        {supabaseIssue && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-2xl p-4 text-sm text-red-800">
+            <p className="font-bold mb-1">⚠️ No se pueden guardar cambios</p>
+            <p>{supabaseIssue}</p>
+            <p className="mt-2 text-xs text-red-700">
+              Supabase → Project Settings → API → copia <strong>service_role</strong> → Vercel →
+              Environment Variables → <code>SUPABASE_SERVICE_ROLE_KEY</code> → Redeploy
+            </p>
+          </div>
+        )}
         <div className="flex gap-2 mb-6 flex-wrap">
           {(["all", "missing", "found"] as const).map((tab) => (
             <button
@@ -110,7 +122,7 @@ export function AdminPanel({ persons }: AdminPanelProps) {
                   : "bg-white text-gray-600 border border-gray-200"
               }`}
             >
-              {tab === "all" ? "Todos" : tab === "missing" ? "Sin contacto" : "Localizados"}
+              {tab === "all" ? "Todos" : tab === "missing" ? "En búsqueda" : "Localizados"}
             </button>
           ))}
         </div>
@@ -158,7 +170,7 @@ export function AdminPanel({ persons }: AdminPanelProps) {
                           person.status === "found" ? "bg-green-500" : "bg-red-500"
                         }`}
                       >
-                        {person.status === "found" ? "✓ Localizado" : "⚠ Sin contacto"}
+                        {personStatusBadge(person.status)}
                       </span>
                     </div>
 
@@ -228,7 +240,7 @@ export function AdminPanel({ persons }: AdminPanelProps) {
                             disabled={loadingId === person.id}
                             className="border-2 border-amber-200 text-amber-700 font-semibold px-4 py-2.5 rounded-xl text-sm"
                           >
-                            Volver a sin contacto
+                            Volver a en búsqueda
                           </button>
                         )}
                         <button
