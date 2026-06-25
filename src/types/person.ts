@@ -7,6 +7,8 @@ export interface Person {
   age: number | null;
   gender: PersonGender | null;
   last_location: string;
+  latitude: number | null;
+  longitude: number | null;
   description: string | null;
   cedula: string | null;
   photo_url: string | null;

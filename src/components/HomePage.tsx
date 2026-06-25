@@ -7,6 +7,7 @@ import { Navbar } from "./Navbar";
 import { Hero } from "./Hero";
 import { PersonGrid } from "./PersonGrid";
 import { EmergencyPhones } from "./EmergencyPhones";
+import { ReportsMapSection } from "./ReportsMapSection";
 import { EmergencyBar } from "./EmergencyBar";
 import { ReportModal } from "./ReportModal";
 import { toast } from "sonner";
@@ -58,6 +59,7 @@ export function HomePage({ initialPersons, initialStats }: HomePageProps) {
 
       <div className="pt-8">
         <EmergencyPhones />
+        <ReportsMapSection persons={persons} />
       </div>
 
       <PersonGrid persons={persons} isLoading={isSearching && hasSearched} />

@@ -1,5 +1,6 @@
 import type { PersonStats } from "@/types/person";
 import { SearchCard } from "./SearchCard";
+import { HeroBackground } from "./HeroBackground";
 
 interface HeroProps {
   stats: PersonStats;
@@ -9,12 +10,9 @@ interface HeroProps {
 
 export function Hero({ stats, onSearch, isSearching }: HeroProps) {
   return (
-    <section
-      className="hero bg-[#1E3A5F] text-white min-h-[85vh] flex flex-col items-center justify-center px-4 py-12 text-center relative overflow-hidden"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
-      }}
-    >
+    <section className="hero bg-[#1E3A5F] text-white min-h-[85vh] flex flex-col items-center justify-center px-4 py-12 text-center relative overflow-hidden">
+      <HeroBackground />
+
       <div className="relative z-10 w-full max-w-4xl">
         <div className="animate-pulse bg-red-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-flex items-center gap-2">
           <span className="w-2 h-2 bg-white rounded-full" />

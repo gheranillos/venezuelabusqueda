@@ -5,6 +5,8 @@ create table if not exists persons (
   age integer,
   gender text check (gender in ('M', 'F', 'other')),
   last_location text not null,
+  latitude double precision,
+  longitude double precision,
   description text,
   cedula text,
   photo_url text,
